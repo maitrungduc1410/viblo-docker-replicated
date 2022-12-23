@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  runner:
+    image: myoung34/github-runner:latest
+    restart: always
+    environment:
+      RUNNER_SCOPE: repo
+      RUNNER_NAME_PREFIX: myrunner
+      LABELS: some-label
+      REPO_URL: https://github.com/maitrungduc1410/viblo-docker-replicated
+      EPHEMERAL: 1
+      ACCESS_TOKEN: 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
+    deploy:
+      mode: replicated
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      rollback_config:
+        parallelism: 3
+        delay: 5s
+        order: start-first
+      update_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: rollback
+        order: start-first
+        

@@ -1,0 +1,66 @@
+name: My Jobs
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: [self-hosted, some-label]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - name: Build App
+        run: npm run build
+
+  lint:
+    runs-on: [self-hosted, some-label]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - name: Lint
+        run: npm run lint
+
+  test:
+    runs-on: [self-hosted, some-label]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - name: Unit tests
+        run: npm run test
+
+  test_cov:
+    runs-on: [self-hosted, some-label]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - name: Coverage test
+        run: npm run test:cov
+
+  test_e2e:
+    runs-on: [self-hosted, some-label]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - name: E2E test
+        run: npm run test:e2e
+
+  build_image:
+    runs-on: [self-hosted, some-label]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t my-app .
